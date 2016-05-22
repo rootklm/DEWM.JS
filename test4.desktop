@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Test4
+Comment=This is fake app #4.
+Type=Application
+Exec=sh /This/is/how/I/execute/test4.exe
+Icon=Test4
+Categories=
