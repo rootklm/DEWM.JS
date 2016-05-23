@@ -3,10 +3,11 @@
 	<!--
 		Things to work on:
 		get rid of that global variable for icon size (maybe replace the entire concept with css)
+		get rid of the global variables for the window positions.
 		convert the selector-box & collision code from javascript calls to jquery calls
 		add rightclick functionality to selector-box function (if there is no mousemove)
 		finish making the icons jquery-draggable and the desktop grid jquery-droppable ( http://jsfiddle.net/T68Fn/ ).
-		add timeout for distinguishing double click from left click
+		make the icons on the desktop launch multiple windows when enter is hit while multiple icons are selected
 		make the name of each icon editable with double click
 		clean up/standardize variable names
 		make sure all components are isolated and compartmentalized
@@ -144,6 +145,9 @@
 	</style>
 	<script>
 		var iconSize = 48;
+		var windowDialogBoxId = 0;
+		var windowCenter = 0;
+		var windowTop = 0;
 		$(document).ready(function(){
 			var iconArray = icons();
 			desktop(iconArray[0], iconArray[1]);
@@ -383,7 +387,7 @@
 					} else {
 						if(selectedIcons.length > 0){
 							if(doubleClickFirstPart == true) {
-								execCommandOnLocalMachine(iconCommandsForDesktop[selectedIcons[0]]);
+								windows(selectedIcons[0], iconCommandsForDesktop[selectedIcons[0]]);
 								console.log("Finished double click. The following icon will be launched: "+selectedIcons[0]);
 								$("#"+selectedIcons[0]).removeClass("iconSelectedStyle");
 							} else {
@@ -406,12 +410,34 @@
 			}
 			desktopMultiSelect(document.getElementsByClassName("desktopArea")[0]);
 		};
-		function windows(){
+		function windows(windowName, windowRunCommand){
 			//requirements:
 			//sized based on contents
 			//open windows in position relative to the active window http://jsfiddle.net/xGsCC/
 			//snap against walls / ceiling / corners?
 			//themed like windows
+			windowDialogBoxId = windowDialogBoxId + 1;
+			windowCenter = windowCenter + 10;
+			windowTop = windowTop + 10;
+			var dialog = $('<div id="'+windowName+'Window" style="display:none"></div>').appendTo('#desktop');
+			dialog.dialog({
+				// add a close listener to prevent adding multiple divs to the document
+				close: function(event, ui) {
+					// remove div with all data and events
+					dialog.remove();
+					windowCenter = windowCenter - 10;
+					windowTop = windowTop - 10;
+				},
+				modal: false,
+				dialogClass: "dialog-box-"+windowDialogBoxId,
+				position: { my: ("center+"+ windowCenter + " top+" + windowTop), at: "center top" },
+				title: windowName
+			});
+			$("#"+windowName+"Window").html(windowRunCommand);
+			var modalTop 	= Number($('.dialog-box-'+windowDialogBoxId).css("top").replace("px", "")) + 20;
+			var modalLeft 	= Number($('.dialog-box-'+windowDialogBoxId).css("left").replace("px", "")) + 20;
+			$('.dialog-box-'+windowDialogBoxId).css("top", modalTop+"px 0 0 0 !important");
+			$('.dialog-box-'+windowDialogBoxId).css("left", "0 0 0 "+modalLeft+"px !important");
 		};
 		function bar() {
 			//requirements:
