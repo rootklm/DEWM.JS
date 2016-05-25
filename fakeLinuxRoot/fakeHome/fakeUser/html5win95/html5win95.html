@@ -16,8 +16,10 @@
 	<head>
 		<meta charset="utf-8"/>
 		<script src="jquery.min.js"></script>
-		<link rel="stylesheet" href="jquery-ui.css">
 		<script src="jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="jquery-ui.css">
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="font-awesome.css">
 	</head>
 	<body>
 	</body>
@@ -29,6 +31,7 @@
 			margine: 0;
 			padding: 0;
 			border: 0px;
+			overflow: hidden;
 		}
 		.barArea {
 			background: #D6CEC8;
@@ -37,7 +40,7 @@
 			border-left: 2px solid #FFFFFF;
 			border-right: 2px solid transparent;
 			position: absolute;
-			height: 2em;
+			height: 5%;
 			bottom: 0;
 			left: 0;
 			right: 0;
@@ -112,10 +115,56 @@
             border-left: 2px solid #FFFFFF;
             border-right: 2px solid #808080;
             position: absolute;
-			height: 2em;
+			height: 100%;
             width: .5em;
-            bottom: 0;
-            right: 0;
+            bottom: -2px;
+            right: -2px;
+            user-drag: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+		}
+		.startButtonStyle {
+			color: #000000;
+			font-weight: bold;
+			background: #D6CEC8;
+            border-top: 2px solid #FFFFFF;
+            border-bottom: 2px solid #808080;
+            border-left: 2px solid #FFFFFF;
+            border-right: 2px solid #808080;
+            position: absolute;
+			height: 1em;
+			width: 3.5em;
+			top: 2px;
+			left: 2px;
+			vertical-align: middle;
+			text-align: center;
+			display: table-cell;
+			user-drag: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+		}
+		.startButtonClickedStyle {
+			color: #000000;
+			font-weight: bold;
+            background: #D6CEC8;
+            border-top: 2px solid #808080;
+            border-bottom: 2px solid #FFFFFF;
+            border-left: 2px solid #808080;
+            border-right: 2px solid #FFFFFF;
+            position: absolute;
+            height: 1em;
+            width: 3.5em;
+            top: 2px;
+            left: 2px;
+            vertical-align: middle;
+            text-align: center;
+            display: table-cell;
             user-drag: none;
             user-select: none;
             -moz-user-select: none;
@@ -125,8 +174,8 @@
 		}
 		.desktopArea {
 			position: absolute;
+			height: 95%;
 			top: 0;
-			bottom: 0;
 			left: 0;
 			right: 0;
 			z-index: 1;
@@ -138,8 +187,8 @@
 			-ms-user-select: none;
 		}
 		.desktopSelectBox {
-			border: 1px solid #0000CC;
-			background: rgba(0,100,255,0.5);
+			border: 1px solid rgb(8,34,108);
+			background: rgba(8,34,108,0.5);
 			position: absolute;
 		}
 		.desktopGridTable {
@@ -232,8 +281,8 @@
 			margine: 0 auto;
 		}
 		.iconSelectedStyle {
-			border: 1px dotted #0000CC;
-			background: rgba(0,100,255,0.5);
+			border: 1px dotted rgb(8,34,108);
+			background: rgba(8,34,108,0.5);
 		}
 	</style>
 	<script>
@@ -245,8 +294,6 @@
 			var iconArray = icons();
 			desktop(iconArray[0], iconArray[1]);
 			bar();
-			clockTray();
-			clockSetup();
 		});
 		$(document).tooltip();
 		$(document).on("contextmenu", function(event) {
@@ -542,6 +589,15 @@
 			//can be hidden
 			var windowsBar = '<div id="windowsBar" class="barArea"></div>';
 			$("body").append(windowsBar);
+			clockSetup();
+			clockTray();
+			var clearWindowsButton = '<div id="clearWindowsButton" class="clearWindowsButtonStyle"></div>'
+            $("#windowsBar").append(clearWindowsButton);
+			startButton();
+		};
+		function startButton() {
+			var startButton = '<div id="startButton" class="startButtonStyle" onclick="startMenu()"><i class="fa fa-linux"></i>Start</div>';
+			$("#windowsBar").append(startButton);
 		};
 		function startMenu() {
 			//requirements:
@@ -550,6 +606,16 @@
 			//power controlls
 			//user info in the top
 			//be able to be plugged into bar()
+
+			//create style for the following divs, then add functionality later.
+			//<div id="startMenu" class="startMenuStyle">
+			//	<div id="appDrawer" class="startAppDrawerStyle"></div>			<div id="userIcon" class="startUserIcon"></div>
+			//	<div id="allProgramsMenu" class="startAllProgramsStyle"></div>	<div id="systemMenu" class="startSystemMenuStyle"></div>
+			//	<div id="searchBar" class="startSearchBarStyle"></div>			<div id="powerReset" class="startPowerResetStyle"></div>
+			//</div>
+			$("#startButton").removeClass("startButtonStyle").addClass("startButtonClickedStyle");
+			alert("Start Menu coming soon!");
+			$("#startButton").removeClass("startButtonClickedStyle").addClass("startButtonStyle");
 		};
 		function pinnedApps() {
 			//must have a space for icons that launch applications,
@@ -574,9 +640,7 @@
 			//must contain a tray for tray-objects (idk how im gonna do this)
 			//must have a clock that has an interface for setting the time.
 			//must have a button that minimizes all of the windows on the desktop.
-			var clearWindowsButton = '<div id="clearWindowsButton" class="clearWindowsButtonStyle"></div>'
 			var clockTray = '<div id="clockTray" class="clockTrayArea"><div id="trayEpand" class="trayExpandStyle"></div><div id="tray" class="trayStyle"></div><!--<span id="clockDate"></span>--><div id="clockTime" class="clockTimeStyle"></div></div>';
-			$("body").append(clearWindowsButton);
 			$("#windowsBar").append(clockTray);
 		};
 		function wallpaper() {
