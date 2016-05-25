@@ -44,6 +44,8 @@
 			bottom: 0;
 			left: 0;
 			right: 0;
+			display: flex;
+			align-items: center;
 			user-drag: none;
 			user-select: none;
 			-moz-user-select: none;
@@ -63,7 +65,8 @@
 			width: 15em;
 			top: 2px;
 			right: 18px;
-			display: table;
+			display: flex;
+			align-items: center;
 			user-drag: none;
 			user-select: none;
 			-moz-user-select: none;
@@ -72,12 +75,9 @@
 			-ms-user-select: none;
 		}
 		.trayExpandStyle {
-			background: url("/home/rklm/Documents/html5win95git/DEWM.JS/fakeLinuxRoot/fakeHome/fakeUser/html5win95/chevron-up.svg");
-			background-repeat: no-repeat;
-			background-size: 50% 50%;
-			background-position: center, center;
-			display: table-cell;
-            vertical-align: middle;
+			display: flex;
+			align-items: center;
+			justify-content: center;
             width: 7%;
             user-drag: none;
             user-select: none;
@@ -87,8 +87,9 @@
             -ms-user-select: none;
 		}
 		.trayStyle {
-			display: table-cell;
-            vertical-align: middle;
+			display: flex;
+            align-items: center;
+			justify-content: center;
             width: 63%;
             user-drag: none;
             user-select: none;
@@ -98,8 +99,9 @@
             -ms-user-select: none;
 		}
 		.clockTimeStyle {
-			display: table-cell;
-			vertical-align: middle;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			width: 30%;
 			user-drag: none;
             user-select: none;
@@ -135,13 +137,13 @@
             border-left: 2px solid #FFFFFF;
             border-right: 2px solid #808080;
             position: absolute;
-			height: 1em;
+			height: 2em;
 			width: 3.5em;
 			top: 2px;
 			left: 2px;
-			vertical-align: middle;
-			text-align: center;
-			display: table-cell;
+			display: flex;
+			align-items: center;
+			jusify-content: center;
 			user-drag: none;
             user-select: none;
             -moz-user-select: none;
@@ -158,13 +160,13 @@
             border-left: 2px solid #808080;
             border-right: 2px solid #FFFFFF;
             position: absolute;
-            height: 1em;
+            height: 2em;
             width: 3.5em;
             top: 2px;
             left: 2px;
-            vertical-align: middle;
-            text-align: center;
-            display: table-cell;
+            display: flex;
+			align-items: center;
+			justify-content: center;
             user-drag: none;
             user-select: none;
             -moz-user-select: none;
@@ -640,7 +642,7 @@
 			//must contain a tray for tray-objects (idk how im gonna do this)
 			//must have a clock that has an interface for setting the time.
 			//must have a button that minimizes all of the windows on the desktop.
-			var clockTray = '<div id="clockTray" class="clockTrayArea"><div id="trayEpand" class="trayExpandStyle"></div><div id="tray" class="trayStyle"></div><!--<span id="clockDate"></span>--><div id="clockTime" class="clockTimeStyle"></div></div>';
+			var clockTray = '<div id="clockTray" class="clockTrayArea"><div id="trayEpand" class="trayExpandStyle"><i class="fa fa-chevron-up"></i></div><div id="tray" class="trayStyle"></div><!--<span id="clockDate"></span>--><div id="clockTime" class="clockTimeStyle"></div></div>';
 			$("#windowsBar").append(clockTray);
 		};
 		function wallpaper() {
